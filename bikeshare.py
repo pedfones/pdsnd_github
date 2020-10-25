@@ -2,9 +2,9 @@ import time
 import pandas as pd
 import numpy as np
 
-CITY_DATA = { 'chicago': 'chicago.csv',
-              'new york city': 'new_york_city.csv',
-              'washington': 'washington.csv' }
+CITY_DATA = { 'c': 'chicago.csv',
+              'n': 'new_york_city.csv',
+              'w': 'washington.csv' }
 
 def get_filters():
     """
@@ -17,41 +17,41 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    
-    while True: 
-        city = str(input('\nPlease choose the city to see the data: Chicago, New York City or Washington?: ').strip().lower())
-               
-        if city not in ('chicago', 'new york city', 'washington'):
+
+    while True:
+        city = str(input('\nPlease choose the city to see the data: Chicago (C), New York City (N) or Washington (W)?: ').strip().lower())
+
+        if city not in ('c', 'n', 'w'):
             print('\nInvalid response. Please try again.')
             continue
         else:
             break
 
     # TO DO: get user input for month (all, january, february, ... , june)
-    
+
     while True:
         month = str(input('\nPlease choose the month to filter the data: all, January, February, ... or June: ').strip().lower())
-        
+
         if month not in ( 'all', 'january', 'february', 'march', 'april', 'may', 'june'):
             print('\nInvalid response. Please try again.')
             continue
         else:
             break
-           
-    
+
+
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
-    
+
     while True:
         day = str(input('\nPlease choose the day of the week: all, Monday, Tuesday, ... or Sunday: ').strip().lower())
-        
+
         if day not in ('all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'):
             print('\nInvalid response. Please try again.')
             continue
         else:
-            break  
+            break
 
     print('-'*40)
-   
+
     return city, month, day
 
 
@@ -101,7 +101,7 @@ def time_stats(df):
 
     # TO DO: display the most common month
     month_index = {'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May', '6': 'June', '7': 'July', '8': 'August', '9': 'September', '10': 'October', '11': 'November', '12': 'December'}
-    
+
     popular_month = month_index[str(df['month'].mode()[0])]
     print('Most common month: {}'.format(popular_month))
 
@@ -138,7 +138,7 @@ def station_stats(df):
     popular_combination = df['Station Combination'].mode()[0]
     print('Most frequent combination of start station and end station trip: {}'.format(popular_combination))
 
-    
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -151,23 +151,23 @@ def trip_duration_stats(df):
 
     # TO DO: display total travel time
     total_travel_time = df['Trip Duration'].sum()
-    
+
     d = str(int(total_travel_time // (24 * 60 * 60)))
     h = str(int((total_travel_time % (24 * 60 * 60)) // (60 * 60)))
     m = str(int(((total_travel_time % (24 * 60 * 60)) % (60 * 60)) // 60))
     s = str(int(((total_travel_time % (24 * 60 * 60)) % (60 * 60)) % 60))
-  
+
     print('Total travel time: {}d {}h {}min {}s'.format(d, h, m, s))
-    
+
     # TO DO: display mean travel time
     mean_travel_time = df['Trip Duration'].mean()
-    
+
     m = str(int(mean_travel_time // 60))
     s = str(int(mean_travel_time % 60))
-    
+
     print('Mean travel time: {}min {}s'.format(m, s))
-    
-    
+
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -181,7 +181,7 @@ def user_stats(df):
     # TO DO: Display counts of user types
     user_types_counts = df['User Type'].value_counts().to_string()
     print('Counts of user types:\n{}\n'.format(user_types_counts))
-    
+
     # TO DO: Display counts of gender
     try:
         gender_counts = df['Gender'].value_counts().to_string()
@@ -189,43 +189,43 @@ def user_stats(df):
 
     except KeyError:
         print('There is no data about gender for this city.\n')
-        
+
     # TO DO: Display earliest, most recent, and most common year of birth
 
     try:
         earliest_birth_year = str(int(df['Birth Year'].min()))
         print('Birth year of the oldest user: {}'.format(earliest_birth_year))
-              
+
         most_recent_birth_year = str(int(df['Birth Year'].max()))
         print('Birth year of the youngest user: {}'.format(most_recent_birth_year))
-             
+
         most_common_birth_year = str(int(df['Birth Year'].mode()[0]))
         print('Most common birth year: {}'.format(most_common_birth_year))
-        
+
     except:
         print('There is no data about year of birth for this city.')
-        
+
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-    
-def raw_data(df):            
-    """Display 5 line raw data each time.""" 
-    
-    raw_input = input('\nWould you like to see the raw data? Enter yes (y) or no (n).\n')   
+
+def raw_data(df):
+    """Display 5 line raw data each time."""
+
+    raw_input = input('\nWould you like to see the raw data? Enter yes (y) or no (n).\n')
     if raw_input.lower() != 'y':
         return
-    i = 0   
+    i = 0
     while len(df.index) >= i:
         print('\n')
         print(df.iloc[i:i+5].to_string())
         i += 5
-        raw_next_rows = input("\nWould you like to see the next 5 rows? Enter yes (y) or no (n)\n")        
+        raw_next_rows = input("\nWould you like to see the next 5 rows? Enter yes (y) or no (n)\n")
 
         if raw_next_rows.lower() != 'y':
             break
- 
+
     return
 
 
