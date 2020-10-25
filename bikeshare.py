@@ -239,11 +239,6 @@ def main():
         trip_duration_stats(df)
         user_stats(df)
         raw_data(df)
-
-        restart = input('\nWould you like to restart? Enter yes (y) or no (n).\n')
-        if restart.lower() != 'y':
-            break
-
-
+        
 if __name__ == "__main__":
 	main()
